@@ -1,0 +1,70 @@
+---
+title: "UN Report on Relationship between GDP and Life Exp"
+author: "Chris Gates"
+date: "10/19/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r load packages, warnings=FALSE, echo=FALSE}
+library(tidyverse)
+
+```
+
+The report examines the relationship between GDP and life expectancy.
+
+```{r read data, echo=FALSE, warnings=FALSE}
+gapminder_1997 <- read_csv("data/gapminder_1997.csv")
+head(gapminder_1997)
+```
+
+``` {r plot}
+ggplot(data = gapminder_1997) +
+  aes(x = gdpPercap, y = lifeExp, color = continent, size = pop/1000000) +
+  geom_point() +
+  labs(x = 'GDP per cap', y= 'Life expectancy',
+      title='Do people in wealthy counytries live longer',
+      size = 'Population size in millions')
+```
+``` {r}
+gdp_max <- max(gapminder_1997$gdpPercap)
+gdp_min <- min(gapminder_1997$gdpPercap)
+n_countries <- length(unique((gapminder_1997$country)))
+```
+``` {r}
+options(scipen=999)
+```
+
+
+| Summary of Data |
+|-------------|-------------|
+|Num countries| `r n_countries` |
+|Min GDP| `r gdp_min` |
+|Max GDP| `r gdp_max` |
+
+<!--
+Note that knitting takes some time. Larger files, more complex analysis can take a while.
+-->
+
+```{r}
+oceania <- gapminder_1997 %>%
+  filter(continent == "Oceania")
+```
+
+
+```{r}
+# Boolean indexing
+oceania <- gapminder_1997 %>%
+  filter(continent == "Oceania")
+```
+
+
+```{r}
+knitr::kable(oceania)
+```
+
+
